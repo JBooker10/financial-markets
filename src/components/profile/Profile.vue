@@ -84,12 +84,7 @@ export default {
     height:auto;
 }
 
-.row {
-    display:flex;
-    flex-direction:row;
-    margin:auto;
-    width:inherit;
-}
+
 
 .flex-half {
     flex:.4
@@ -111,12 +106,15 @@ export default {
 }
 
 .load {
-    margin-top:20em;
+    margin-top:17em;
 }
 
 .loading {
     height:80vh;
 }
+
+
+
 
 
 </style>

@@ -30,7 +30,7 @@ export default {
 .logo {
     display:flex;
     content: url(./../../assets/logo2.svg);
-    height:30px;
+    height:3em;
     align-self:center;
     opacity:.6;
 }

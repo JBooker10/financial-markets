@@ -10,13 +10,14 @@
          <h3>{{ quoteData.companyName.slice(0,32) }} Price Per Share:<span class="highlight"> {{quoteData.latestPrice}}</span>
              <span class="highlight2">{{quoteData.changePercent | numeralFormat('(0.00%)') }}</span> </h3>
         <div class="card-margins">
-        <time-series-chart 
+        <time-series-chart class="mobile"
                 :symbol="quoteData.symbol"
                 :high="chartData.map(data => data.high)"
                 :low="chartData.map(data => data.low)"
                 :chartlabel="chartData.map(data => data.label)"
-                :height="130"/>
+                :height="145"/>
         <time-series-metrics
+                class="series-metrics"
                 :latestVolume="quoteData.latestVolume"
                 :peRatio="quoteData.peRatio"
                 :high="quoteData.high"

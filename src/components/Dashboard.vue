@@ -69,7 +69,6 @@ export default {
         debounceTime(750),
         distinctUntilChanged(),
         switchMap(searchMarkets),
-        tap(val => console.log(val)),
         share()
 
     )

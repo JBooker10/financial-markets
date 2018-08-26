@@ -5,7 +5,7 @@
             <h3>News Feed</h3>
         </div>
         <div class="feed" v-if="newsData">
-        <h2 class="slide" :key="iterator">{{ newsFeed.headline }}</h2>
+        <h2 class="slide animated flipInX" :key="iterator">{{ newsFeed.headline }}</h2>
             <div>
             <a :href="newsFeed.url"  target="_blank" class="btn-news">Learn More</a>
             </div>
@@ -35,7 +35,7 @@ export default {
         },
 
         play() {  
-            this.timer = setInterval(this.incrementIterator, 5000) 
+            this.timer = setInterval(this.incrementIterator, 7000) 
         }
       
     },
@@ -62,7 +62,7 @@ export default {
 }
 
 h2 {
-    font-size:1.35rem;
+    font-size:2em;
     text-align:center;
     background: linear-gradient(330deg,#C162FF, #57AFFF);
     -webkit-background-clip: text;
@@ -114,9 +114,9 @@ padding:1em;
 }
 
 .news {
-    width:35em;
     min-height:300px;
     justify-content: space-between;
+    overflow:hidden;
 }
 
 

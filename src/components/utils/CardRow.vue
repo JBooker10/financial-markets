@@ -1,7 +1,7 @@
 <template>
     <div class="card-row" v-bind:style="[hasBorder ? getBorder : 'null']">
         <div class="col flex-start" v-bind:style="[sm]"><p>{{ propName }}</p></div>
-        <div class="col flex-end"   v-bind:style="[sm]"><p class="highlight">{{ propValue }}</p></div>
+        <div class="col flex-end animated flipInX"   v-bind:style="[sm]"><p class="highlight">{{ propValue }}</p></div>
     </div>
 </template>
 <script>

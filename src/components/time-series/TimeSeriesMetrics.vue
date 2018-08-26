@@ -24,9 +24,9 @@ export default {
 
  .metrics {
     display:flex;
-    margin-top: 1em;
+    /* margin-top: .5em; */
     justify-content: space-around;
-    font-size:13px;
+    font-size:12px;
   }
 
 </style>

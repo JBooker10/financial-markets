@@ -4,7 +4,7 @@
       <img src="./../../assets/loading.gif" class="load"/>
     </div>
     <div v-else>
-        <img src="./../../assets/sad.svg" alt="" height="200" class="not">
+        <img src="./../../assets/sad.svg" alt="" class="not">
         <h2 class="void">Uh-oh! {{ capture.toUpperCase() }} is not a valid ticker </h2>
         <h1>404 Not Found</h1>
     </div>
@@ -38,13 +38,15 @@ export default {
 <style>
 
 .notfound {
-    padding-top:4em;
+    padding-top:10em;
     height:75vh;
 }
 
 .not {
     margin:auto;
     display:block;
+    height:15em;
+    width:15em;
 }
 
 </style>
