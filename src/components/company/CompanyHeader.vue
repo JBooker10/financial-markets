@@ -1,10 +1,10 @@
 <template>
     <div class="card-main-header">
         <div class="header">
-            <svg height="25" width="25" class="tag tag-left">
+            <!-- <svg height="25" width="25" class="tag tag-left">
             <circle cx="12.5" cy="12.5" r="10" class="circle"  />
-            </svg>
-            <h1 class="head1">{{ symbol }}</h1>
+            </svg> -->
+            <h1 class="head1 colored">{{ symbol }}</h1>
             </div>
     <p class="card-main-name">{{ companyName }}</p>
     </div>

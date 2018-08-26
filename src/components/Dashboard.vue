@@ -1,12 +1,9 @@
 <template>
   <div class="main">
      <nav>
-
     <input type="text" class="search" v-bind:value="search"
-          v-on:input="search = $event.target.value" placeholder="Enter a company ticker" autofocus>
+          v-on:input="search = $event.target.value" placeholder="Enter company ticker..." autofocus>
     </nav>
-
-
     <div class="dashboard">
       <profile 
                :company="company$"
