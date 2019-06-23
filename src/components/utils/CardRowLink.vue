@@ -4,14 +4,21 @@
       <p>{{ propName }}</p>
     </div>
     <div class="col flex-end animated flipInX" v-bind:style="[sm]">
-      <p class="highlight">{{ propValue }}</p>
+      <p>
+        <a :href="propLink" target="_blank" class="link">{{ propValue }}</a>
+      </p>
     </div>
   </div>
 </template>
 <script>
 export default {
-  name: "CardRow",
-  props: { propName: String, propValue: [String, Number], hasBorder: Boolean },
+  name: "CardRowLink",
+  props: {
+    propName: String,
+    propLink: String,
+    propValue: [String, Number],
+    hasBorder: Boolean
+  },
   data() {
     return {
       getBorder: {
@@ -31,6 +38,20 @@ export default {
   cursor: pointer;
 }
 
+a.link {
+  text-decoration: none;
+  background: linear-gradient(-45deg, #6db8fd, #a074fd, #f781ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+a.link:hover {
+  background: none;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: white;
+  color: white;
+}
+
 .flex-end {
   align-self: flex-end;
   text-align: right;
@@ -43,7 +64,6 @@ export default {
 
 .card-row:hover {
   /* background-image: linear-gradient(to right top, #23ffc6, #00ffb6, #00ffa5, #00ff90, #00ff7a); */
-  color: white;
   background: rgba(25, 29, 45, 1);
 }
 

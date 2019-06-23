@@ -6,11 +6,13 @@ import router from "./router";
 import VueAnalytics from "vue-analytics";
 import VueNumerals from "vue-numerals";
 import VueRx from "vue-rx";
+import VTooltip from "v-tooltip";
 
 const isProd = process.env.NODE_ENV === "production";
 
 Vue.use(VueNumerals);
 Vue.use(VueRx);
+Vue.use(VTooltip);
 
 Vue.config.productionTip = false;
 

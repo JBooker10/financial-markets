@@ -12,6 +12,7 @@
     </nav>
     <div class="dashboard">
       <profile
+        :key="chartType"
         :company="company$"
         :quote="quote$"
         :chart="chart$"
@@ -19,7 +20,9 @@
         :stats="stats$"
         :financials="financials$"
         :news="news$"
+        :advancedStats="advancedStats$"
         :getSearch="search"
+        @update-time-series="getTimeSeries"
       />
     </div>
     <dashboard-footer class="dashboard-footer"/>
@@ -42,7 +45,8 @@ import {
   catchError,
   debounceTime,
   distinctUntilChanged,
-  switchMap
+  switchMap,
+  merge
 } from "rxjs/operators";
 import { ajax } from "rxjs/ajax";
 
@@ -52,17 +56,35 @@ export default {
   data() {
     return {
       search: "",
-      newsAmount: 10,
+      financialChart: 4,
       chartType: "6m"
     };
   },
-
+  methods: {
+    getTimeSeries(val) {
+      this.$data.chartType = val;
+      this.chartType = val;
+    }
+  },
+  created() {
+    this.$watch(
+      "chartType",
+      () =>
+        function getTimeSeries(val) {
+          this.chartType = val;
+        }
+    );
+    this.$forceUpdate();
+  },
   subscriptions() {
-    const searchMarkets = symbol =>
+    const IEX = process.env.IEX_API;
+    const token = process.env.IEX_SECRET;
+
+    let path = `${this.chartType}&last=${this.financialChart}&token=${token}`;
+
+    const searchMarkets = (symbol, chart) =>
       ajax(
-        `https://api.iextrading.com/1.0/stock/${symbol}/batch?types=company,quote,earnings,stats,financials,news,chart&range=${
-          this.chartType
-        }&last=${this.newsAmount}`
+        `${IEX}stable/stock/${symbol}/batch?types=company,quote,earnings,financials,news,stats,advanced-stats,chart&range=${path}`
       ).pipe(
         map(validate),
         catchError(val => of(new Error())),
@@ -84,8 +106,19 @@ export default {
     const chart$ = markets$.pipe(pluck("chart"));
     const earnings$ = markets$.pipe(pluck("earnings", "earnings"));
     const stats$ = markets$.pipe(pluck("stats"));
+    const advancedStats$ = markets$.pipe(pluck("advanced-stats"));
     const financials$ = markets$.pipe(pluck("financials", "financials"));
     const news$ = markets$.pipe(pluck("news"));
+
+    this.$watch(
+      "chartType",
+      () =>
+        function getTimeSeries(val) {
+          this.chartType = val;
+        }
+    );
+
+    this.$forceUpdate();
 
     return {
       error$,
@@ -95,7 +128,8 @@ export default {
       earnings$,
       stats$,
       financials$,
-      news$
+      news$,
+      advancedStats$
     };
   }
 };

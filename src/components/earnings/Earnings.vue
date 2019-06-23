@@ -7,7 +7,7 @@
         :actualEPS="earningsData.map(data => data.actualEPS)"
         :consensusEPS="earningsData.map(data => data.consensusEPS)"
         :fiscalPeriod="earningsData.map(data => data.fiscalPeriod)"
-        :height="230"
+        :height="270"
         class="chart"
       />
     </div>

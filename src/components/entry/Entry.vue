@@ -43,7 +43,7 @@ export default {
     },
 
     play() {
-      this.timer = setInterval(this.incrementIterator, 700);
+      this.timer = setInterval(this.incrementIterator, 850);
     }
   },
   computed: {

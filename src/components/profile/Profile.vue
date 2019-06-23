@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="!company ">
+    <div v-if="!company && !chart">
       <div v-if="getSearch !== ''">
         <div v-if="company && quote && chart">Loading...</div>
         <div v-else>
@@ -26,7 +26,12 @@
       </div>
       <div class="row">
         <financials class="flex-1" :quoteData="quote" :financialData="financials"/>
-        <key-stats title="Key Statistics" :statsData="stats" class="flex-half"/>
+        <key-stats
+          title="Key Statistics"
+          :statsData="stats"
+          :advancedStatsData="advancedStats"
+          class="flex-half"
+        />
       </div>
     </div>
   </div>
@@ -65,7 +70,14 @@ export default {
     stats: Object,
     financials: Array,
     news: Array,
+    advancedStats: Object,
     getSearch: String
+  },
+  methods: {
+    getTimeSeries(val) {
+      this.test = val;
+      console.log(val);
+    }
   }
 };
 </script>
