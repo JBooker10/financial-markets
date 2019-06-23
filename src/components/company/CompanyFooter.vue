@@ -1,6 +1,6 @@
 <template>
   <div class="description">
-    <small>{{ truncateDescription(description, 250) }}</small>
+    <small>{{ truncateDescription(description, 110) }}</small>
   </div>
 </template>
 <script>

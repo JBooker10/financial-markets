@@ -98,7 +98,7 @@ export default {
   /* font-size:2em; */
   /* font-weight:100; */
 
-  background: linear-gradient(45deg, #57afff, #601cf1, #f142fc);
+  background: linear-gradient(45deg, #57afff, #7134f5, #f474fd);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }

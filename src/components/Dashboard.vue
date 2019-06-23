@@ -1,6 +1,7 @@
 <template>
   <div class="main">
     <nav>
+      <logo></logo>
       <input
         type="text"
         class="search"
@@ -9,6 +10,9 @@
         placeholder="Enter company ticker..."
         autofocus
       >
+      <div class="nil">
+        <p>Sign In</p>
+      </div>
     </nav>
     <div class="dashboard">
       <profile
@@ -32,6 +36,7 @@
 <script>
 import Profile from "./profile/Profile";
 import DashboardFooter from "./dashboard-footer/DashboardFooter";
+import Logo from "./utils/Logo.vue";
 import { validate } from "./utils/utils.js";
 
 import { of } from "rxjs";
@@ -52,7 +57,7 @@ import { ajax } from "rxjs/ajax";
 
 export default {
   name: "Dashboard",
-  components: { Profile, DashboardFooter },
+  components: { Profile, DashboardFooter, Logo },
   data() {
     return {
       search: "",
@@ -62,8 +67,8 @@ export default {
   },
   methods: {
     getTimeSeries(val) {
-      this.$data.chartType = val;
       this.chartType = val;
+      this.$forceUpdate();
     }
   },
   created() {
@@ -74,17 +79,17 @@ export default {
           this.chartType = val;
         }
     );
-    this.$forceUpdate();
   },
   subscriptions() {
-    const IEX = process.env.IEX_API;
-    const token = process.env.IEX_SECRET;
+    const { IEX_API, IEX_SECRET } = process.env;
 
-    let path = `${this.chartType}&last=${this.financialChart}&token=${token}`;
+    let path = `${this.chartType}&last=${
+      this.financialChart
+    }&token=${IEX_SECRET}`;
 
     const searchMarkets = (symbol, chart) =>
       ajax(
-        `${IEX}stable/stock/${symbol}/batch?types=company,quote,earnings,financials,news,stats,advanced-stats,chart&range=${path}`
+        `${IEX_API}stable/stock/${symbol}/batch?types=company,quote,earnings,financials,news,stats,advanced-stats,chart&range=${path}`
       ).pipe(
         map(validate),
         catchError(val => of(new Error())),
@@ -118,8 +123,6 @@ export default {
         }
     );
 
-    this.$forceUpdate();
-
     return {
       error$,
       company$,
@@ -140,6 +143,31 @@ export default {
 .main {
   display: flex;
   flex-direction: column;
+}
+
+.nil {
+  display: flex;
+  flex: 0.25;
+}
+
+.nil p {
+  text-align: center;
+  margin: auto;
+  font-size: 1.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 700;
+}
+
+.JBmarkets {
+  fill: rgba(49, 57, 92, 0.7);
+  height: 30px;
+  display: flex;
+  flex: 0.25;
+}
+
+.JBmarkets:hover {
+  fill: white;
 }
 
 .dashboard-footer {

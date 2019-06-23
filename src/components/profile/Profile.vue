@@ -2,7 +2,7 @@
   <div>
     <div v-if="!company && !chart">
       <div v-if="getSearch !== ''">
-        <div v-if="company && quote && chart">Loading...</div>
+        <div v-if="company && quote && chart && earnings && advancedStats">Loading...</div>
         <div v-else>
           <div class="loading">
             <not-found :getSearch="getSearch"/>

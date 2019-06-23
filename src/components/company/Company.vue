@@ -19,20 +19,22 @@
       :propValue="companyData.sector"
       v-tooltip.bottom="sector"
     />
+
     <card-row v-if="companyData.industry" propName="Industry" :propValue="companyData.industry"/>
     <card-row propName="Exchange" :propValue="companyData.exchange" v-tooltip.bottom="exchange"/>
     <company-footer :description="companyData.description"/>
+    <card-tags :propValue="companyData.tags"/>
   </div>
 </template>
 <script>
 import CompanyHeader from "./CompanyHeader";
 import CompanyFooter from "./CompanyFooter";
 import CardRow from "./../utils/CardRow";
-import CardRowLink from "./../utils/CardRowLink";
+import CardTags from "./../utils/CardTags";
 
 export default {
   name: "Company",
-  components: { CompanyHeader, CompanyFooter, CardRow, CardRowLink },
+  components: { CompanyHeader, CompanyFooter, CardRow, CardTags },
   props: { companyData: Object, quoteData: Object },
   data() {
     return {

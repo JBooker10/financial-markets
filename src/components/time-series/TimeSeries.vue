@@ -6,9 +6,7 @@
           <span
             class="highlight stock-head"
           >{{ this.hover ? previousQuote : quoteData.latestPrice | numeralFormat('($0.00)') }}</span>
-          <!-- <span class="highlight stock-head">{{quoteData.latestPrice | numeralFormat('($0.00)') }}</span> -->
         </h3>
-
         <p>
           <span
             class="highlight2"
@@ -24,11 +22,11 @@
       </div>
       <div class="buttons">
         <!-- <button @click="updateTimeSeries('1d')" class="btn btn-left">1D</button> -->
-        <button @click="updateTimeSeries('1m')" class="btn">1M</button>
+        <button @click="updateTimeSeries('1m')" class="btn btn-left">1M</button>
         <button @click="updateTimeSeries('3m')" class="btn">3M</button>
-        <button @click="updateTimeSeries('6m')" class="btn">6M</button>
+        <button @click="updateTimeSeries('6m')" class="btn btn-active">6M</button>
         <button @click="updateTimeSeries('1y')" class="btn">1Y</button>
-        <button @click="updateTimeSeries('ytd')" class="btn btn-active btn-right">YTD</button>
+        <button @click="updateTimeSeries('ytd')" class="btn btn-right">YTD</button>
       </div>
     </div>
     <div class="card-margins" @mouseenter="mouseOver" @mouseleave="mouseLeave">
@@ -41,10 +39,10 @@
         :low="chartData.map(data => data.low)"
         :date="chartData.map(d => d.date)"
         :chartlabel="chartData.map(data => data.label)"
-        :height="140"
+        :height="153"
         @update-quote="getHistoricalQuote"
       />
-      <br>
+
       <time-series-metrics
         class="series-metrics"
         :latestVolume="quoteData.latestVolume"

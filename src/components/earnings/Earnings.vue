@@ -1,5 +1,5 @@
 <template>
-  <div class="card card-chart">
+  <div class="card card-chart" v-if="earningsData && statsData">
     <h3>Earnings Per Share</h3>
     <div class="card-margins">
       <earnings-chart
@@ -10,6 +10,11 @@
         :height="270"
         class="chart"
       />
+    </div>
+  </div>
+  <div v-else>
+    <div class="center">
+      <img src="./../../assets/bar-chart.svg" alt class="not">
     </div>
   </div>
 </template>

@@ -67,7 +67,6 @@ export const timeSeriesOptions = {
   }
 };
 
-// TESTING
 export const timeSeriesOptionsCallback = callback => {
   return {
     responsive: true,
@@ -122,14 +121,13 @@ export const timeSeriesOptionsCallback = callback => {
       intersect: true
     },
     tooltips: {
-      //   mode: "index",
-      mode: "label", // or 'x-axis'
+      mode: "label",
       intersect: false,
       callbacks: {
         label: function(tooltipItem, data) {
           var label = data.datasets[tooltipItem.datasetIndex].label || "";
           callback(tooltipItem.yLabel, tooltipItem.xLabel);
-          return label;
+          return label + " " + tooltipItem.yLabel;
         }
       }
     }

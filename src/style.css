@@ -36,12 +36,14 @@ h3 {
 
 nav {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  align-content: center;
+  flex: 0.5;
   height: 6em;
-  padding: 0.5em;
+  padding: 0.5em 0;
   /* border-bottom: 1px solid rgba(25, 29, 45, 1); */
-  width: 100%;
+  width: 100vw;
   background: rgba(20, 23, 28, 0.8);
   margin-bottom: 1em;
   position: fixed;
@@ -88,7 +90,7 @@ nav {
 }
 
 .card {
-  margin: 1.33em;
+  margin: 1.6em 1.33em;
   width: inherit;
   min-width: 350px;
   background: #14171c;
@@ -423,7 +425,7 @@ nav {
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (max-width: 768px) {
   body {
-    font-size: 53%;
+    font-size: 60%;
   }
 
   .row {
@@ -436,7 +438,7 @@ nav {
   .card {
     max-width: 380px;
     min-width: 320px;
-    min-height: 250px;
+    min-height: 300px;
   }
 
   .series-metrics,
