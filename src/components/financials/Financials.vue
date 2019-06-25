@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card" v-if="financialData && quoteData">
     <div class="financial-header">
       <h3>Financials</h3>
     </div>
@@ -16,10 +16,14 @@
       />
     </div>
   </div>
+  <div v-else>
+    <div class="center">
+      <img src="./../../assets/bar-chart.svg" alt class="not">
+    </div>
+  </div>
 </template>
 <script>
 import FinancialsChart from "./FinancialsChart.vue";
-import numeral from "numeral";
 
 export default {
   name: "Financials",

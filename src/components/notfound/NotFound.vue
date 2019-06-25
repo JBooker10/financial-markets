@@ -16,8 +16,9 @@
     </div>
     <div v-else>
       <img src="./../../assets/sad.svg" alt class="not">
-      <h2 class="void">Uh-oh! {{ capture.toUpperCase() }} is not a valid ticker</h2>
-      <h1>404 Not Found</h1>
+      <h2 class="highlight void">{{ capture.toUpperCase() }}</h2>
+      <!-- <h2 class="void">Uh-oh! {{ capture.toUpperCase() }} is not a valid ticker</h2>
+      <h1>404 Not Found</h1>-->
     </div>
   </div>
 </template>
@@ -35,7 +36,7 @@ export default {
     displayNotFound() {
       setTimeout(() => {
         this.isLoading = false;
-      }, 4000);
+      }, 4200);
     }
   },
   mounted() {
@@ -47,6 +48,12 @@ export default {
 .notfound {
   padding-top: 10em;
   height: 75vh;
+  background: #14171c;
+}
+
+.void {
+  text-align: center;
+  font-size: 3em;
 }
 
 .not {

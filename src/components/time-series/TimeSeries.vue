@@ -15,18 +15,19 @@
             {{quoteData.changePercent | numeralFormat('(0.00%)') }}
             <span
               class="time"
-            >&nbsp;{{ this.hover ? new Date(this.date).toDateString() : "Today" }}</span>
+            >&nbsp;{{ this.hover ? this.date : "Today " + this.quoteData.latestTime + " EST", }}</span>
           </span>
         </p>
+
         <!-- <p class="time">{{quoteData.latestTime}}</p> -->
       </div>
       <div class="buttons">
         <!-- <button @click="updateTimeSeries('1d')" class="btn btn-left">1D</button> -->
-        <button @click="updateTimeSeries('1m')" class="btn btn-left">1M</button>
-        <button @click="updateTimeSeries('3m')" class="btn">3M</button>
-        <button @click="updateTimeSeries('6m')" class="btn btn-active">6M</button>
-        <button @click="updateTimeSeries('1y')" class="btn">1Y</button>
-        <button @click="updateTimeSeries('ytd')" class="btn btn-right">YTD</button>
+        <button @click="updateTimeSeries('1m')" class="btn btn-left" disabled>1M</button>
+        <button @click="updateTimeSeries('3m')" class="btn" disabled>3M</button>
+        <button @click="updateTimeSeries('6m')" class="btn btn-active" disabled>6M</button>
+        <button @click="updateTimeSeries('1y')" class="btn" disabled>1Y</button>
+        <button @click="updateTimeSeries('ytd')" class="btn btn-right" disabled>YTD</button>
       </div>
     </div>
     <div class="card-margins" @mouseenter="mouseOver" @mouseleave="mouseLeave">
@@ -34,10 +35,10 @@
         class="mobile"
         :symbol="quoteData.symbol"
         :changePercent="chartData.map(data => data.changePercent)"
-        :high="chartData.map(data => data.high)"
         :close="chartData.map(d => d.close)"
+        :high="chartData.map(data => data.high)"
         :low="chartData.map(data => data.low)"
-        :date="chartData.map(d => d.date)"
+        :date="chartData.map(d => this.formatTime(d.date))"
         :chartlabel="chartData.map(data => data.label)"
         :height="153"
         @update-quote="getHistoricalQuote"
@@ -63,6 +64,7 @@
 <script>
 import TimeSeriesMetrics from "./TimeSeriesMetrics";
 import TimeSeriesChart from "./TimeSeriesChart";
+import moment from "moment";
 
 export default {
   name: "TimeSeries",
@@ -72,6 +74,7 @@ export default {
     return {
       previousQuote: this.quoteData.latestPrice,
       date: "Today",
+
       hover: false,
       browsing: false
     };
@@ -84,6 +87,10 @@ export default {
 
     updateTimeSeries(val) {
       this.$parent.$emit("update-time-series", val);
+    },
+
+    formatTime(time) {
+      return moment(time).format("LL");
     },
 
     mouseOver() {

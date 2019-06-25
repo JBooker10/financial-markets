@@ -16,7 +16,7 @@
     </nav>
     <div class="dashboard">
       <profile
-        :key="chartType"
+        :key="chart"
         :company="company$"
         :quote="quote$"
         :chart="chart$"
@@ -54,6 +54,7 @@ import {
   merge
 } from "rxjs/operators";
 import { ajax } from "rxjs/ajax";
+import { page } from "vue-analytics";
 
 export default {
   name: "Dashboard",
@@ -62,66 +63,66 @@ export default {
     return {
       search: "",
       financialChart: 4,
-      chartType: "6m"
+      chart: "6m"
     };
   },
   methods: {
     getTimeSeries(val) {
-      this.chartType = val;
-      this.$forceUpdate();
-    }
-  },
-  created() {
-    this.$watch(
-      "chartType",
-      () =>
-        function getTimeSeries(val) {
-          this.chartType = val;
-        }
-    );
-  },
-  subscriptions() {
-    const { IEX_API, IEX_SECRET } = process.env;
+      this.$set(this.$data, "chart", val);
+    },
 
-    let path = `${this.chartType}&last=${
-      this.financialChart
-    }&token=${IEX_SECRET}`;
+    searchMarkets(symbol) {
+      const { IEX_API, IEX_SECRET } = process.env;
 
-    const searchMarkets = (symbol, chart) =>
-      ajax(
-        `${IEX_API}stable/stock/${symbol}/batch?types=company,quote,earnings,financials,news,stats,advanced-stats,chart&range=${path}`
+      return ajax(
+        `${IEX_API}stable/stock/${symbol}/batch?types=company,quote,earnings,news,stats,advanced-stats,chart&chartCloseOnly=true&range=${
+          this.chart
+        }&last=${this.financialChart}&token=${IEX_SECRET}`
       ).pipe(
         map(validate),
         catchError(val => of(new Error())),
         share()
       );
+    },
 
-    const markets$ = this.$watchAsObservable("search").pipe(
-      pluck("newValue"),
-      filter(str => str.trim() != ""),
-      debounceTime(750),
-      distinctUntilChanged(),
-      switchMap(searchMarkets),
-      share()
-    );
+    marketObservable$(callback) {
+      return this.$watchAsObservable("search").pipe(
+        pluck("newValue"),
+        filter(str => str.trim() != ""),
+        debounceTime(750),
+        distinctUntilChanged(),
+        switchMap(callback),
+        share()
+      );
+    },
 
-    const error$ = markets$.pipe(pluck("request"));
-    const company$ = markets$.pipe(pluck("company"));
-    const quote$ = markets$.pipe(pluck("quote"));
-    const chart$ = markets$.pipe(pluck("chart"));
-    const earnings$ = markets$.pipe(pluck("earnings", "earnings"));
-    const stats$ = markets$.pipe(pluck("stats"));
-    const advancedStats$ = markets$.pipe(pluck("advanced-stats"));
-    const financials$ = markets$.pipe(pluck("financials", "financials"));
-    const news$ = markets$.pipe(pluck("news"));
+    track() {
+      page("/");
+    }
+  },
+  created() {
+    this.$watch("chart", () => {
+      this.marketObservable$(this.searchMarkets);
+      console.log("Update");
+    });
+  },
+  subscriptions() {
+    let markets$ = this.marketObservable$(this.searchMarkets);
 
-    this.$watch(
-      "chartType",
-      () =>
-        function getTimeSeries(val) {
-          this.chartType = val;
-        }
-    );
+    let error$ = markets$.pipe(pluck("request"));
+    let company$ = markets$.pipe(pluck("company"));
+    let quote$ = markets$.pipe(pluck("quote"));
+    let chart$ = markets$.pipe(pluck("chart"));
+    let earnings$ = markets$.pipe(pluck("earnings", "earnings"));
+    let stats$ = markets$.pipe(pluck("stats"));
+    let advancedStats$ = markets$.pipe(pluck("advanced-stats"));
+    let financials$ = markets$.pipe(pluck("financials", "financials"));
+    let news$ = markets$.pipe(pluck("news"));
+
+    this.$watch("chart", () => {
+      this.marketObservable$(this.searchMarkets);
+      console.log("Update");
+    });
 
     return {
       error$,

@@ -14,9 +14,10 @@ Vue.use(VueNumerals);
 Vue.use(VueRx);
 Vue.use(VTooltip);
 
-Vue.config.productionTip = false;
-
 Vue.use(VueAnalytics, {
+  autoTracking: {
+    screenview: true
+  },
   id: "UA-124821225-1",
   checkDuplicatedScript: true,
   router,
@@ -25,6 +26,8 @@ Vue.use(VueAnalytics, {
     sendHitTask: isProd
   }
 });
+
+Vue.config.productionTip = false;
 
 /* eslint-disable no-new */
 new Vue({

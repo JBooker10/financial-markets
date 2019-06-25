@@ -66,6 +66,7 @@ nav {
   color: #fff;
   text-align: center;
   z-index: 3;
+  caret-color: #9666ff;
 }
 
 .search:focus {
@@ -75,6 +76,7 @@ nav {
 .search::placeholder {
   font-weight: normal;
   letter-spacing: 0;
+  font-size: 0.9em;
   text-transform: none;
   color: rgba(51, 58, 88);
   /* color: rgba(255, 255, 255, 0.3); */
