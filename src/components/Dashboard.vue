@@ -16,7 +16,6 @@
     </nav>
     <div class="dashboard">
       <profile
-        :key="chart"
         :company="company$"
         :quote="quote$"
         :chart="chart$"
@@ -26,7 +25,6 @@
         :news="news$"
         :advancedStats="advancedStats$"
         :getSearch="search"
-        @update-time-series="getTimeSeries"
       />
     </div>
     <dashboard-footer class="dashboard-footer"/>
@@ -67,10 +65,6 @@ export default {
     };
   },
   methods: {
-    getTimeSeries(val) {
-      this.$set(this.$data, "chart", val);
-    },
-
     searchMarkets(symbol) {
       const { IEX_API, IEX_SECRET } = process.env;
 
@@ -100,12 +94,6 @@ export default {
       page("/");
     }
   },
-  created() {
-    this.$watch("chart", () => {
-      this.marketObservable$(this.searchMarkets);
-      console.log("Update");
-    });
-  },
   subscriptions() {
     let markets$ = this.marketObservable$(this.searchMarkets);
 
@@ -118,11 +106,6 @@ export default {
     let advancedStats$ = markets$.pipe(pluck("advanced-stats"));
     let financials$ = markets$.pipe(pluck("financials", "financials"));
     let news$ = markets$.pipe(pluck("news"));
-
-    this.$watch("chart", () => {
-      this.marketObservable$(this.searchMarkets);
-      console.log("Update");
-    });
 
     return {
       error$,
