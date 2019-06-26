@@ -10,7 +10,11 @@
         :date="date"
       ></time-series-header>
       <div class="buttons">
-        <!-- <button @click="getChartData('1d')" :class="setClassName('1d', 'active', 'left')">1D</button> -->
+        <!-- <button
+          @click="getChartData('1d', 1)"
+          :class="setClassName('1d', 'active', 'left')"
+        
+        >1D</button>-->
         <button @click="getChartData('1m')" :class="setClassName('1m', 'active', 'left')">1M</button>
         <button @click="getChartData('3m')" :class="setClassName('3m', 'active')">3M</button>
         <button @click="defaultChartSize" :class="!emitUpdate ?  'btn btn-active' : 'btn' ">6M</button>
@@ -28,7 +32,7 @@
         :high="chartData.map(data => data.high)"
         :low="chartData.map(data => data.low)"
         :date="chartData.map(d => this.formatTime(d.date))"
-        :chartlabel="chartData.map(d => this.formatTime(d.date))"
+        :chartlabel="chartData.map(d =>  this.formatTime(d.date))"
         :height="153"
         @update-quote="getHistoricalQuote"
       />
@@ -100,13 +104,13 @@ export default {
       this.emitUpdate = false;
     },
 
-    getChartData(size) {
+    getChartData(size, num = 1) {
       if (this.size !== size) {
         const { IEX_API, IEX_SECRET } = process.env;
         const myRequest = new Request(
           `${IEX_API}v1/stock/${
             this.quoteData.symbol
-          }/chart/${size}?chartCloseOnly=true&token=${IEX_SECRET}`
+          }/chart/${size}?chartCloseOnly=true&&chartInterval=${num}&token=${IEX_SECRET}`
         );
         fetch(myRequest)
           .then(response => {
@@ -172,6 +176,10 @@ export default {
   height: 100%;
 }
 
+button:disabled,
+button[disabled] {
+}
+
 .stock-head {
   text-align: left !important;
   font-size: 1.7em;
@@ -203,7 +211,7 @@ export default {
 }
 
 .btn {
-  padding: 0.5em 1em;
+  padding: 0.5em 0.75em;
   background: none;
   height: 2.5em;
 

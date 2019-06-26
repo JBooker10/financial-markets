@@ -93,6 +93,10 @@ export default {
   display: flex;
 }
 
+.entry h3 {
+  color: rgba(25, 29, 45, 0.7);
+}
+
 .percentage {
   color: #9666ff;
 }
