@@ -16,12 +16,12 @@
       Low&nbsp;
       <span class="highlight">{{ low | numeralFormat('($0.00)') }}</span>
     </span>
-    <span>
+    <!-- <span>
       Change&nbsp;
       <span
         class="highlight"
       >{{ change }} ({{ changePercent | numeralFormat('0.00%') }})</span>
-    </span>
+    </span>-->
   </div>
 </template>
 <script>

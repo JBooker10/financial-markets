@@ -14,6 +14,7 @@
         <p>Sign In</p>
       </div>
     </nav>
+    <div class="gainers"></div>
     <div class="dashboard">
       <profile
         :company="company$"
@@ -66,6 +67,7 @@ export default {
   },
   methods: {
     searchMarkets(symbol) {
+      console.log(process.env);
       const { IEX_API, IEX_SECRET } = process.env;
 
       return ajax(

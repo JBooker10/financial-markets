@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- <div class="gainers"></div> -->
     <div v-if="!company && !chart">
       <div v-if="getSearch !== ''">
         <div v-if="company && quote && chart && earnings && advancedStats">Loading...</div>

@@ -31,8 +31,9 @@ export default {
 }
 
 .tag {
-  font-size: 1em;
+  font-size: 1.2em;
   color: white;
+  font-weight: 700;
 
   background: rgba(25, 29, 45, 1);
   /* background: linear-gradient(45deg, #57afff, #601cf1); */

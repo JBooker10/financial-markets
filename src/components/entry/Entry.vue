@@ -1,46 +1,31 @@
 <template>
   <div class="entry">
     <div class="lane animated flipInX" :key="iterator">
-      <h1 class="colored text-head">{{ tickerAnimation.symbol }}</h1>
-      <p class="company">{{ tickerAnimation.companyName }}</p>
-      <p class="price">
-        {{ tickerAnimation.close | numeralFormat('$0.00a') }}
+      <h1 class="text-head">{{ tickerAnimation.symbol }}</h1>
+      <p class="light company">{{ tickerAnimation.companyName }}</p>
+      <p v-if="tickerAnimation.calculationPrice === 'previousclose'" class="light price">
+        {{ tickerAnimation.extendedPrice | numeralFormat('$0.00a') }}
         <span
-          class="percentage"
-        >{{ tickerAnimation.changePercent | numeralFormat('%0.00')}}</span>
+          :class="Math.sign(tickerAnimation.extendedChangePercent	) === -1 ? 'negative': 'positive'"
+        >{{ tickerAnimation.extendedChangePercent | numeralFormat('%0.000')}}</span>
+      </p>
+      <p v-else class="light price">
+        {{ tickerAnimation.latestPrice | numeralFormat('$0.00a') }}
+        <span
+          :class="Math.sign(tickerAnimation.change	) === -1 ? 'negative': 'positive'"
+        >{{ tickerAnimation.change | numeralFormat('%0.000')}}</span>
       </p>
     </div>
   </div>
 </template>
 <script>
+import moment from "moment";
+
 export default {
   name: "Entry",
   data() {
     return {
       symbols: [],
-      // symbols: [
-      //   "MSFT",
-      //   "AAPL",
-      //   "SNAP",
-      //   "FB",
-      //   "NFLX",
-      //   "JPM",
-      //   "IBM",
-      //   "GOOGL",
-      //   "INTC",
-      //   "AMZN",
-      //   "XOM",
-      //   "WFC",
-      //   "V",
-      //   "BAC",
-      //   "WMT",
-      //   "JNJ",
-      //   "PG",
-      //   "CVX",
-      //   "BUD",
-      //   "UBER",
-      //   "DBX"
-      // ],
       iterator: 0,
       timer: null
     };
@@ -48,6 +33,10 @@ export default {
   methods: {
     incrementIterator() {
       this.iterator += 1;
+    },
+
+    formatTime(time) {
+      return moment(time).format("LLL");
     },
 
     fetchData() {
@@ -81,8 +70,6 @@ export default {
   },
   mounted() {
     this.fetchData();
-
-    console.log(this.symbols);
   }
 };
 </script>
@@ -95,6 +82,10 @@ export default {
 
 .entry h3 {
   color: rgba(25, 29, 45, 0.7);
+}
+
+.light {
+  color: rgba(51, 58, 88);
 }
 
 .percentage {
@@ -122,6 +113,7 @@ export default {
 
 .lane .price {
   font-size: 20px;
+  margin: 0;
 }
 
 .lane h2 {
@@ -151,11 +143,20 @@ export default {
   display: block;
 }
 
+.negative {
+  color: rgb(248, 66, 90, 0.8);
+}
+
+.positive {
+  color: rgb(68, 247, 143, 0.8);
+}
+
 .colored {
+  background: linear-gradient(45deg, #57afff, #601cf1, #d183ff);
   /* font-size:2em; */
   /* font-weight:100; */
 
-  background: linear-gradient(45deg, #57afff, #7134f5, #f474fd);
+  /* background: linear-gradient(45deg, #57afff, #7134f5, #f474fd); */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
