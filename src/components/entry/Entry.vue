@@ -13,7 +13,7 @@
         {{ tickerAnimation.latestPrice | numeralFormat('$0.00a') }}
         <span
           :class="Math.sign(tickerAnimation.change	) === -1 ? 'negative': 'positive'"
-        >{{ tickerAnimation.change | numeralFormat('%0.000')}}</span>
+        >{{ tickerAnimation.changePercent | numeralFormat('%0.000')}}</span>
       </p>
     </div>
   </div>
